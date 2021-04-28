@@ -29,7 +29,7 @@ exports.sourceNodes = async (
   const data = await query;
 
   // Process data into nodes.
-  data.postsList.items.forEach(value => {
+  data[Object.keys(data)[0]].items.forEach(value => {
     const nodeContent = JSON.stringify(value);
     const nodeMeta = {
       id: createNodeId(`post-${value.id}`),
