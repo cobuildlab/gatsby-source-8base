@@ -1,5 +1,5 @@
 const { GraphQLClient } = require("graphql-request");
-const POST_NODE_TYPE = `BasePost`;
+const POST_NODE_TYPE = `8BasePost`;
 
 exports.sourceNodes = async (
   {
@@ -24,6 +24,7 @@ exports.sourceNodes = async (
     }
   });
 
+  // Request graphql query
   const query = await client.request(queryGraphQL);
   const data = await query;
 
