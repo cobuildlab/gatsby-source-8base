@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-source-8base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cobuildlab/gatsby-source-8base.git"
+  },
+  "keywords": [
+    "8base",
+    "gatsby"
+  ],
+  "author": "CobuildLab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cobuildlab/gatsby-source-8base/issues"
+  },
+  "homepage": "https://github.com/cobuildlab/gatsby-source-8base#readme",
+  "dependencies": {
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.4.0",
+    "graphql-tag": "^2.11.0",
+    "node-fetch": "^2.6.1"
+  }
+}
