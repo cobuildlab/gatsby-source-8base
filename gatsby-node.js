@@ -11,14 +11,14 @@ exports.sourceNodes = async (
   {
     url,
     apiToken,
-    idWorkspace,
+    workspaceId,
     queryGraphQL
   }) => {
 
   const { createNode } = actions;
 
   //Connect to workspace 8base
-  const client = new GraphQLClient(`${url}/${idWorkspace}`, {
+  const client = new GraphQLClient(`${url}/${workspaceId}`, {
     headers: {
       Authorization: `Bearer ${apiToken}`
     }
