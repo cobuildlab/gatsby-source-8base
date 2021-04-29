@@ -12,7 +12,7 @@ exports.sourceNodes = async (
     url,
     apiToken,
     workspaceId,
-    queryGraphQL
+    graphqlQuery
   }) => {
 
   const { createNode } = actions;
@@ -25,7 +25,7 @@ exports.sourceNodes = async (
   });
 
   // Request graphql query
-  const query = await client.request(queryGraphQL);
+  const query = await client.request(graphqlQuery);
   const data = await query;
 
   // Process data into nodes.

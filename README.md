@@ -4,7 +4,7 @@ Source plugin for [Gatsby](https://www.gatsbyjs.org/).
 
 ## Install
 
-`npm install --save gatsby-source-8base`
+`npm install --save @cobuildlab/gatsby-source-8base`
 
 ## How to Use
 
@@ -17,7 +17,7 @@ plugins:[
       url: 'https://api.8base.com',
       apiToken: "xxxxxxxx",
       workspaceId: "xxxxxxx",
-      queryGraphQL: `
+      graphqlQuery: `
         query {
           postsList {
             items {
