@@ -45,8 +45,8 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(
         `
-          query BasePost {
-            allBasePost(skip: 0) {
+          query 8BasePost {
+            all8BasePost(skip: 0) {
               post: edges {
                 post: node {
                   id
@@ -64,7 +64,7 @@ exports.createPages = ({ graphql, actions }) => {
           return reject(response.errors);
         }        
  
-        response.data.allBasePost.post.forEach((data, index) => {
+        response.data['8BasePost'].post.forEach((data, index) => {
           createPage({
             path: `/blog/`,
             component: path.resolve(`./src/templates/my-template.js`),
