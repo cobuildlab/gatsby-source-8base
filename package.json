@@ -12,7 +12,9 @@
   },
   "keywords": [
     "8base",
-    "gatsby"
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-transformer-plugin"
   ],
   "author": "CobuildLab",
   "license": "MIT",

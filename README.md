@@ -34,7 +34,8 @@ plugins:[
 ```
 
 ## How to Use
-`Example of how to create pages dynamically`
+`Example of how to create pages dynamically.
+ In the case of an image in the query, the name of the filename and downloadUrl field is important, since they are used to verify that an image exists and make the corresponding optimization.`
 ```javascript
 // In your gatsby-node.js
 
@@ -53,6 +54,11 @@ exports.createPages = ({ graphql, actions }) => {
                   title
                   slug
                   content
+                  imageUrl {
+                    id
+                    filename
+                    downloadUrl
+                  }
                 }
               }
             }
@@ -66,7 +72,7 @@ exports.createPages = ({ graphql, actions }) => {
  
         response.data['8BasePost'].post.forEach((data, index) => {
           createPage({
-            path: `/blog/`,
+            path: `/blog/${data.slug}`,
             component: path.resolve(`./src/templates/my-template.js`),
             // The context is passed as props to the component as well
             // as into the component's GraphQL query.
@@ -81,3 +87,30 @@ exports.createPages = ({ graphql, actions }) => {
 }
 
 ```
+My template:
+```javascript
+// myTemplate.js
+
+import React, { Fragment } from "react"
+
+function myTemplate({ pageContext }) {
+  const { data } = pageContext;
+  const { title, content, remoteImage  } = data;
+  return (
+    <Fragment>
+      <div className="blog-post-container">
+        <div className="blog-post">
+          <h1> {title} </h1>
+          <div> {content} </div>
+        </div>
+        <div className="blog-post-image">
+          <img src={remoteImage.publicURL} alt="" />    
+        </div>
+      </div>
+    </Fragment>
+  )
+}
+export default myTemplate
+```
+
+create by www.cobuildlab.com
