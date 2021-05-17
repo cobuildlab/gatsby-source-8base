@@ -35,7 +35,7 @@ plugins:[
 
 ## How to Use
 `Example of how to create pages dynamically.
- In the case of an image in the query, the name of the filename and downloadUrl field is important, since they are used to verify that an image exists and make the corresponding optimization.`
+ In the case of an image in the query, the name of the filename and downloadUrl field are important, since they are used to verify that an image exists and make the corresponding optimization.`
 ```javascript
 // In your gatsby-node.js
 
@@ -46,8 +46,8 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(
         `
-          query 8BasePost {
-            all8BasePost(skip: 0) {
+          query BasePost {
+            allPost8Base {
               post: edges {
                 post: node {
                   id
@@ -70,7 +70,7 @@ exports.createPages = ({ graphql, actions }) => {
           return reject(response.errors);
         }        
  
-        response.data['8BasePost'].post.forEach((data, index) => {
+        response.data['allPost8Base'].post.forEach((data, index) => {
           createPage({
             path: `/blog/${data.slug}`,
             component: path.resolve(`./src/templates/my-template.js`),
@@ -113,4 +113,4 @@ function myTemplate({ pageContext }) {
 export default myTemplate
 ```
 
-create by www.cobuildlab.com
+[create by cobuildlab](https://cobuildlab.com/)
