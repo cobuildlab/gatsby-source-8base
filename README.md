@@ -35,7 +35,7 @@ plugins:[
 
 ## How to Use
 `Example of how to create pages dynamically.
- In the case of an image in the query, the name of the filename and downloadUrl field is important, since they are used to verify that an image exists and make the corresponding optimization.`
+ In the case of an image in the query, the name of the filename and downloadUrl field are important, since they are used to verify that an image exists and make the corresponding optimization.`
 ```javascript
 // In your gatsby-node.js
 
@@ -113,4 +113,5 @@ function myTemplate({ pageContext }) {
 export default myTemplate
 ```
 
-create by www.cobuildlab.com
+[create by cobuildlab](https://cobuildlab.com/)
+
