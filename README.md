@@ -46,8 +46,8 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(
         `
-          query 8BasePost {
-            all8BasePost(skip: 0) {
+          query BasePost {
+            allPost8Base {
               post: edges {
                 post: node {
                   id
@@ -70,7 +70,7 @@ exports.createPages = ({ graphql, actions }) => {
           return reject(response.errors);
         }        
  
-        response.data['8BasePost'].post.forEach((data, index) => {
+        response.data['allPost8Base'].post.forEach((data, index) => {
           createPage({
             path: `/blog/${data.slug}`,
             component: path.resolve(`./src/templates/my-template.js`),
@@ -114,4 +114,3 @@ export default myTemplate
 ```
 
 [create by cobuildlab](https://cobuildlab.com/)
-
