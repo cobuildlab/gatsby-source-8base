@@ -122,7 +122,10 @@ export default myTemplate
 ### Optional
 `Example of how to convert markdown text to html for rendering in dynamic page creation`
 
+`npm i --save remark-html `
 ```javascript
+// In your gatsby-node.js
+
 const _ = require('lodash');
 const Promise = require('bluebird');
 const path = require('path');
