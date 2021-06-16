@@ -1,6 +1,5 @@
 
 const validateObject = (object, data) => {
-
   for (let property in object) {
 
     if(property === 'filename' && isImage(object[property])) {
@@ -9,7 +8,7 @@ const validateObject = (object, data) => {
     }
 
     if(typeof(object[property]) === 'object'){
-      return validateObject(object[property], data)
+      validateObject(object[property], data)
     }
 
   }
