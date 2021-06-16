@@ -28,7 +28,7 @@ exports.sourceNodes = async (
     let resp = Utils.validateObject(value, {});
 
     if (resp.validate) {
-      value['downloadUrl'] = resp.imageUrl;
+      value['validate'] = resp.validate;
     }
 
     const nodeContent = JSON.stringify(value);
@@ -51,24 +51,37 @@ exports.sourceNodes = async (
 
 exports.onCreateNode = async ({
   node, // the node that was just created
-  actions: { createNode },
+  actions: { createNode, createNodeField },
   createNodeId,
   getCache,
 }) => {
 
-  if (node.internal.type === POST_NODE_TYPE)
+  if (node.internal.type === POST_NODE_TYPE) {
     //if exists image, create remoteUrl
-    if (node.downloadUrl){
-      const fileNode = await createRemoteFileNode({
-        // the url of the remote image to generate a node for
-        url: node.downloadUrl,
-        parentNodeId: node.id,
-        createNode,
-        createNodeId,
-        getCache,
+    if (node.validate) {
+      const images = await Promise.all(
+        node.imageUrl.items.map(data => {
+          return createRemoteFileNode({
+            url: data.downloadUrl,
+            parentNodeId: node.id,
+            createNode,
+            createNodeId,
+            getCache,
+          })
+        }
+
+        )
+      );
+      // Field with image list
+      await createNodeField({
+        node,
+        name: "images",
+        value: images,
       });
-      if (fileNode) {
-        node.remoteImage___NODE = fileNode.id;
-      }
+
+      node.fields.images.forEach((image, i) => {
+        image.remoteImage___NODE = images[i].id
+      })
+    }
   }
 };
