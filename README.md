@@ -17,6 +17,7 @@ plugins:[
       url: 'https://api.8base.com',
       apiToken: "xxxxxxxx",
       workspaceId: "xxxxxxx",
+      nodeType: ['Post8Base'],
       graphqlQuery: `
         query {
           postsList {
@@ -27,6 +28,41 @@ plugins:[
           count
           }
         }
+      `
+     }
+  }
+]
+```
+
+```javascript
+// In gatsby-config.js
+// In the case two queries
+// List node is a list to get the name of the node to be created
+plugins:[
+  {
+    resolve: "@cobuildlab/gatsby-source-8base",
+    options: {
+      url: 'https://api.8base.com',
+      apiToken: "xxxxxxxx",
+      workspaceId: "xxxxxxx",
+      nodeType: ['Post8Base', 'Example8Base'],
+      graphqlQuery: `
+        query {
+          postsList {
+            items {
+              id
+              title
+            }
+          count
+          }
+        exampleList {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
       `
      }
   }

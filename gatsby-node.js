@@ -2,11 +2,11 @@ const Utils = require('./src/utils');
 const { GraphQLClient } = require('graphql-request');
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
 
-const POST_NODE_TYPE = `Post8Base`;
+let node_type = [];
 
 exports.sourceNodes = async (
   { actions, createNodeId, createContentDigest, options },
-  { url, apiToken, workspaceId, graphqlQuery },
+  { url, apiToken, workspaceId, nodeType, graphqlQuery},
 ) => {
   const { createNode } = actions;
 
@@ -21,30 +21,34 @@ exports.sourceNodes = async (
   const query = await client.request(graphqlQuery);
   const data = await query;
 
+  node_type = nodeType;
+
   // Process data into nodes.
-  data[Object.keys(data)[0]].items.forEach((value) => {
+  Object.keys(data).map((value, i) => {
+    data[value].items.map((dataValue) => {
 
-    //validate if objects
-    let resp = Utils.validateObject(value, {});
+      //validate if objects
+      let resp = Utils.validateObject(dataValue, {});
 
-    if (resp.validate) {
-      value['validate'] = resp.validate;
-    }
+      if (resp.validate) {
+        dataValue['validate'] = resp.validate;
+      }
 
-    const nodeContent = JSON.stringify(value);
+      const nodeContent = JSON.stringify(dataValue);
 
-    const nodeMeta = {
-      id: createNodeId(`post-${value.id}`),
-      parent: null,
-      children: [],
-      internal: {
-        type: POST_NODE_TYPE,
-        content: nodeContent,
-        contentDigest: createContentDigest(value),
-      },
-    };
-    const node = Object.assign({}, value, nodeMeta);
-    createNode(node);
+      const nodeMeta = {
+        id: createNodeId(`${nodeType[i]}-${dataValue.id}`),
+        parent: null,
+        children: [],
+        internal: {
+          type: nodeType[i],
+          content: nodeContent,
+          contentDigest: createContentDigest(dataValue),
+        },
+      };
+      const node = Object.assign({}, dataValue, nodeMeta);
+      createNode(node);
+    });
   });
   return;
 };
@@ -53,10 +57,10 @@ exports.onCreateNode = async ({
   node, // the node that was just created
   actions: { createNode, createNodeField },
   createNodeId,
-  getCache,
+  getCache
 }) => {
 
-  if (node.internal.type === POST_NODE_TYPE) {
+  if (node_type.includes(node.internal.type)) {
     //if exists image, create remoteUrl
     if (node.validate) {
       const images = await Promise.all(
@@ -68,9 +72,7 @@ exports.onCreateNode = async ({
             createNodeId,
             getCache,
           })
-        }
-
-        )
+        })
       );
       // Field with image list
       await createNodeField({
