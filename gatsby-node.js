@@ -6,7 +6,7 @@ let node_type = [];
 
 exports.sourceNodes = async (
   { actions, createNodeId, createContentDigest, options },
-  { url, apiToken, workspaceId, nodeType, graphqlQuery},
+  { url, apiToken, workspaceId, graphqlQuery},
 ) => {
   const { createNode } = actions;
 
@@ -21,7 +21,10 @@ exports.sourceNodes = async (
   const query = await client.request(graphqlQuery);
   const data = await query;
 
-  node_type = nodeType;
+  //I extract the name from the answer query and assign the prefix 8Base
+  Object.keys(data).map((value, i) => {
+    node_type.push(`${value}8Base`)
+  });
 
   // Process data into nodes.
   Object.keys(data).map((value, i) => {
@@ -37,11 +40,11 @@ exports.sourceNodes = async (
       const nodeContent = JSON.stringify(dataValue);
 
       const nodeMeta = {
-        id: createNodeId(`${nodeType[i]}-${dataValue.id}`),
+        id: createNodeId(`${node_type[i]}-${dataValue.id}`),
         parent: null,
         children: [],
         internal: {
-          type: nodeType[i],
+          type: node_type[i],
           content: nodeContent,
           contentDigest: createContentDigest(dataValue),
         },
@@ -59,7 +62,6 @@ exports.onCreateNode = async ({
   createNodeId,
   getCache
 }) => {
-
   if (node_type.includes(node.internal.type)) {
     //if exists image, create remoteUrl
     if (node.validate) {
