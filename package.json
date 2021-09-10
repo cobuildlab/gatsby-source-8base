@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/cobuildlab/gatsby-source-8base#readme",
   "dependencies": {
-    "gatsby-source-filesystem": "^3.4.0",
+    "gatsby-source-filesystem": "^3.9.0",
     "graphql": "^15.5.1",
     "graphql-request": "^3.4.0",
     "graphql-tag": "^2.11.0",
